@@ -5,8 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".ContactListActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+    </android.support.v7.widget.Toolbar>
+
     <ListView
         android:id="@+id/contact_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        />
 </RelativeLayout>
