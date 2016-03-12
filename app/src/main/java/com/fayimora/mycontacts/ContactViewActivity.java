@@ -90,7 +90,21 @@ public class ContactViewActivity extends AppCompatActivity {
             String value = (String) getItem(position);
             TextView fieldValue = (TextView) convertView.findViewById(R.id.contact_view_row_value);
             fieldValue.setText(value);
+
+            ImageView iv = (ImageView) convertView.findViewById(R.id.field_icon);
+
+            if(isFirst(position)){
+                if(isEmail(position))
+                    iv.setImageResource(R.drawable.ic_email);
+                else
+                    iv.setImageResource(R.drawable.ic_call);
+            }
+
             return convertView;
+        }
+
+        private boolean isFirst(int position) {
+            return position == 0 || position ==phoneNumbers.size();
         }
 
         @Override
