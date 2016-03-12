@@ -19,8 +19,6 @@ public class ContactViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point point = new Point();
@@ -34,6 +32,9 @@ public class ContactViewActivity extends AppCompatActivity {
         Contact c = (Contact) getIntent().getSerializableExtra(EXTRA);
         TextView tv = (TextView) findViewById(R.id.contact_view_name);
         tv.setText(c.getName());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
+        setSupportActionBar(toolbar);
 
     }
 
