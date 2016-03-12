@@ -34,8 +34,8 @@ public class ContactViewActivity extends AppCompatActivity {
         tv.setText(c.getName());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
-        setSupportActionBar(toolbar);
-
+        toolbar.inflateMenu(R.menu.menu_contact_view);
+//        setSupportActionBar(toolbar);
     }
 
 }
