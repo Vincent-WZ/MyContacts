@@ -29,6 +29,10 @@ public class ContactListActivity extends AppCompatActivity {
         for (int i=0; i<30; i++){
             Contact c1 = new Contact();
             c1.setName("Fayimora");
+            c1.emails = new ArrayList<>();
+            c1.phoneNumbers = new ArrayList<>();
+            c1.emails.add("fayi@q.com");
+            c1.phoneNumbers.add("07555551111");
             contacts.add(c1);
         }
 
