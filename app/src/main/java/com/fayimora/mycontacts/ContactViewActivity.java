@@ -1,10 +1,13 @@
 package com.fayimora.mycontacts;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 
 public class ContactViewActivity extends AppCompatActivity {
     public static String EXTRA = "CVA_Contact";
+    public int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,17 @@ public class ContactViewActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.contact_view_fields);
         listView.setAdapter(new FieldsAdapter(c.emails, c.phoneNumbers));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sunset2);
+        Palette palette;
+        if (bitmap != null && !bitmap.isRecycled()) {
+            palette = Palette.from(bitmap).generate();
+            if(palette.getDarkVibrantSwatch() != null){
+                color = palette.getDarkVibrantSwatch().getRgb();
+            } else if(palette.getDarkMutedSwatch() != null){
+                color = palette.getDarkMutedSwatch().getRgb();
+            }
+        }
     }
 
     private class FieldsAdapter extends BaseAdapter {
@@ -99,7 +114,7 @@ public class ContactViewActivity extends AppCompatActivity {
                 else
                     iv.setImageResource(R.drawable.ic_call);
             }
-
+            iv.setColorFilter(color);
             return convertView;
         }
 
