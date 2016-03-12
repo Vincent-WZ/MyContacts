@@ -1,11 +1,13 @@
 package com.fayimora.mycontacts;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class ContactListActivity extends AppCompatActivity {
 
+    private ArrayList<Contact> contacts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +24,7 @@ public class ContactListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts = new ArrayList<>();
 
         for (int i=0; i<30; i++){
             Contact c1 = new Contact();
@@ -33,6 +36,7 @@ public class ContactListActivity extends AppCompatActivity {
         listView.setAdapter(new ContactAdapter(contacts));
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             int previousFirstIem = 0;
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -40,12 +44,22 @@ public class ContactListActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem > previousFirstIem){
+                if (firstVisibleItem > previousFirstIem) {
                     getSupportActionBar().hide();
-                } else if(firstVisibleItem < previousFirstIem) {
+                } else if (firstVisibleItem < previousFirstIem) {
                     getSupportActionBar().show();
                 }
                 previousFirstIem = firstVisibleItem;
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact c = contacts.get(position);
+                Intent i = new Intent(ContactListActivity.this, ContactViewActivity.class);
+                i.putExtra(ContactViewActivity.EXTRA, c);
+                startActivity(i);
             }
         });
     }
