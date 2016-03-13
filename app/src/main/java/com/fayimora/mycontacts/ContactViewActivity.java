@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +26,8 @@ public class ContactViewActivity extends AppCompatActivity {
     public int color;
     public Contact contact;
     int contactIndex;
+    FieldsAdapter fieldsAdapter;
+    TextView contactNameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class ContactViewActivity extends AppCompatActivity {
 
         contactIndex = getIntent().getIntExtra(EXTRA, 0);
         contact = ContactList.getInstance().get(contactIndex);
-        TextView tv = (TextView) findViewById(R.id.contact_view_name);
-        tv.setText(contact.getName());
+        contactNameView = (TextView) findViewById(R.id.contact_view_name);
+        contactNameView.setText(contact.getName());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
         toolbar.inflateMenu(R.menu.menu_contact_view);
@@ -64,7 +64,8 @@ public class ContactViewActivity extends AppCompatActivity {
         });
 
         ListView listView = (ListView) findViewById(R.id.contact_view_fields);
-        listView.setAdapter(new FieldsAdapter(contact.emails, contact.phoneNumbers));
+        fieldsAdapter = new FieldsAdapter(contact.emails, contact.phoneNumbers);
+        listView.setAdapter(fieldsAdapter);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sunset2);
         Palette palette;
@@ -76,6 +77,18 @@ public class ContactViewActivity extends AppCompatActivity {
                 color = palette.getDarkMutedSwatch().getRgb();
             }
         }
+        updateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    private void updateUI(){
+        contactNameView.setText(contact.getName());
+        fieldsAdapter.notifyDataSetChanged();
     }
 
     private class FieldsAdapter extends BaseAdapter {
