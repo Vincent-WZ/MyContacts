@@ -27,6 +27,7 @@ public class ContactViewActivity extends AppCompatActivity {
     public static String EXTRA = "CVA_Contact";
     public int color;
     public Contact contact;
+    int contactIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,8 @@ public class ContactViewActivity extends AppCompatActivity {
         RelativeLayout headerSection = (RelativeLayout) findViewById(R.id.contact_view_header);
         headerSection.setLayoutParams(new LinearLayout.LayoutParams(width, (int) (width * (9.0 / 16.0))));
 
-        contact = (Contact) getIntent().getSerializableExtra(EXTRA);
+        contactIndex = getIntent().getIntExtra(EXTRA, 0);
+        contact = ContactList.getInstance().get(contactIndex);
         TextView tv = (TextView) findViewById(R.id.contact_view_name);
         tv.setText(contact.getName());
 
@@ -54,7 +56,7 @@ public class ContactViewActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if(id == R.id.contact_view_edit){
                     Intent i = new Intent(ContactViewActivity.this, ContactEditActivity.class);
-                    i.putExtra(ContactEditActivity.EXTRA, contact);
+                    i.putExtra(ContactEditActivity.EXTRA, contactIndex);
                     startActivity(i);
                 }
                 return id == R.id.contact_view_edit;

@@ -20,7 +20,8 @@ public class ContactEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_edit);
-        contact = (Contact) getIntent().getSerializableExtra(EXTRA);
+        int position = getIntent().getIntExtra(EXTRA, 0);
+        contact = ContactList.getInstance().get(position);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.contact_edit_toolbar);
         toolbar.setTitle(getResources().getString(R.string.edit_contact));

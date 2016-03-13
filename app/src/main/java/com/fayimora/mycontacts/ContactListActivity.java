@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ContactListActivity extends AppCompatActivity {
 
-    private ArrayList<Contact> contacts;
+    private ContactList contacts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class ContactListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        contacts = new ArrayList<>();
+        contacts = ContactList.getInstance();
 
         for (int i=0; i<10; i++){
             Contact c1 = new Contact();
@@ -66,9 +66,8 @@ public class ContactListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Contact c = contacts.get(position);
                 Intent i = new Intent(ContactListActivity.this, ContactViewActivity.class);
-                i.putExtra(ContactViewActivity.EXTRA, c);
+                i.putExtra(ContactViewActivity.EXTRA, position);
                 startActivity(i);
             }
         });
