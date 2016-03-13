@@ -16,8 +16,7 @@
             android:src="@drawable/sunset2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"/>
+            android:scaleType="centerCrop"/>
         <TextView
             android:id="@+id/contact_view_name"
             android:text="DaMainBoss"
