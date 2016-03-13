@@ -1,5 +1,6 @@
 package com.fayimora.mycontacts;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class ContactViewActivity extends AppCompatActivity {
     public static String EXTRA = "CVA_Contact";
     public int color;
+    public Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,9 @@ public class ContactViewActivity extends AppCompatActivity {
         RelativeLayout headerSection = (RelativeLayout) findViewById(R.id.contact_view_header);
         headerSection.setLayoutParams(new LinearLayout.LayoutParams(width, (int) (width * (9.0 / 16.0))));
 
-        Contact c = (Contact) getIntent().getSerializableExtra(EXTRA);
+        contact = (Contact) getIntent().getSerializableExtra(EXTRA);
         TextView tv = (TextView) findViewById(R.id.contact_view_name);
-        tv.setText(c.getName());
+        tv.setText(contact.getName());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
         toolbar.inflateMenu(R.menu.menu_contact_view);
@@ -50,12 +52,17 @@ public class ContactViewActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
+                if(id == R.id.contact_view_edit){
+                    Intent i = new Intent(ContactViewActivity.this, ContactEditActivity.class);
+                    i.putExtra(ContactEditActivity.EXTRA, contact);
+                    startActivity(i);
+                }
                 return id == R.id.contact_view_edit;
             }
         });
 
         ListView listView = (ListView) findViewById(R.id.contact_view_fields);
-        listView.setAdapter(new FieldsAdapter(c.emails, c.phoneNumbers));
+        listView.setAdapter(new FieldsAdapter(contact.emails, contact.phoneNumbers));
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sunset2);
         Palette palette;
